@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <script>
+        AFRAME.registerComponent('move-and-rotate', {
+            schema: {
+                radius: { type: 'number', default: 1 },
+                speed: { type: 'number', default: 2 }
+            },
+
+            init: function () {
+                let pos = this.el.object3D.position;
+                this.angle = Math.atan2(pos.y, pos.z);
+                this.targetAngle = null;
+                this.currentRotation = 0;
+                this.initialX = pos.x;
+                this.targetRotation = null;
+                this.isMoving = false;
+                this.isCenter = this.el.getAttribute('color') === 'navy';
+
+                this.calculateLowestX();
+                this.calculateHighestX();
+                this.bindKeyEvents();
+            },
+
+            calculateLowestX: function () {
+                let allCubes = document.querySelectorAll('.cube');
+                let minX = Infinity;
+
+                for (let i = 0; i < allCubes.length; i++) {
+                    let x = allCubes[i].object3D.position.x;
+                    if (x < minX) {
+                        minX = x;
+                    }
+                }
+
+                this.lowestX = minX;
+                this.isOnLowestLayer = this.el.object3D.position.x === minX && minX === -2;
+
+                console.log("Lowest X: " + this.lowestX);
+                console.log("Is on lowest layer: " + this.isOnLowestLayer);
+            },
+
+            calculateHighestX: function () {
+                let allCubes = document.querySelectorAll('.cube');
+                let maxX = Infinity;
+
+                for (let i = 0; i < allCubes.length; i++) {
+                    let x = allCubes[i].object3D.position.x;
+                    if (x > maxX) {
+                        maxX = x;
+                    }
+                }
+
+                this.highestX = maxX;
+                this.isOnHighestLayer = this.el.object3D.position.x === maxX && maxX === -2;
+
+                console.log("Highest X: " + this.highestX);
+                console.log("Is on Highest layer: " + this.isOnHighestLayer);
+            },
+
+            bindKeyEvents: function () {
+                window.addEventListener('keydown', (event) => {
+                    if (this.isOnLowestLayer && !this.isMoving) {
+                        if (event.key.toLowerCase() === 'q') {
+                            this.startMovementClock();
+                        }
+                        if (event.key.toLowerCase() === 'e') {
+                            this.startMovementAntiClock();
+                        }
+                    }
+                    if (this.isOnHighestLayer && !this.isMoving) {
+                        if (event.key.toLowerCase() === 'z') {
+                            this.startMovementClock();
+                        }
+                        if (event.key.toLowerCase() === 'x') {
+                            this.startMovementAntiClock();
+                        }
+                    }
+                });
+            },
+
+            startMovementClock: function () {
+                if (this.isMoving) return;
+                this.isMoving = true;
+
+                if (this.isCenter) {
+                    this.targetRotation = this.currentRotation - 90;
+                } else {
+                    this.targetAngle = this.angle - Math.PI / 2;
+                    this.targetRotation = this.currentRotation - 90;
+                }
+            },
+
+            startMovementAntiClock: function () {
+                if (this.isMoving) return;
+                this.isMoving = true;
+
+                if (this.isCenter) {
+                    this.targetRotation = this.currentRotation + 90;
+                } else {
+                    this.targetAngle = this.angle + Math.PI / 2;
+                    this.targetRotation = this.currentRotation + 90;
+                }
+            },
+
+            tick: function (time, timeDelta) {
+                if (!this.isMoving) return;
+
+                let rotationComplete = this.updateRotation(timeDelta);
+                let positionComplete = this.isCenter ? true : this.updatePosition(timeDelta);
+
+                if (rotationComplete && positionComplete) {
+                    this.isMoving = false;
+                }
+            },
+
+            updateRotation: function (timeDelta) {
+                let rotationStep = (timeDelta / 1000) * this.data.speed * 60;
+
+                if (this.currentRotation < this.targetRotation) {
+                    this.currentRotation = Math.min(this.currentRotation + rotationStep, this.targetRotation);
+                } else {
+                    this.currentRotation = Math.max(this.currentRotation - rotationStep, this.targetRotation);
+                }
+
+                this.el.object3D.rotation.x = THREE.MathUtils.degToRad(this.currentRotation);
+                return this.currentRotation === this.targetRotation;
+            },
+
+            updatePosition: function (timeDelta) {
+                let step = (timeDelta / 1000) * this.data.speed;
+
+                if (Math.abs(this.angle - this.targetAngle) < step) {
+                    this.angle = this.targetAngle;
+                } else {
+                    this.angle += (this.angle < this.targetAngle) ? step : -step;
+                }
+
+                let y = Math.round(this.data.radius * Math.cos(this.angle) * 1000) / 1000;
+                let z = Math.round(this.data.radius * Math.sin(this.angle) * 1000) / 1000;
+                this.el.object3D.position.set(this.initialX, y, z);
+
+                return this.angle === this.targetAngle;
+            }
+        });
+    </script>
+</head>
+<body style="margin: 0px; overflow: hidden;">
+<a-scene>
+    <a-camera position="0 8 15"></a-camera>
+    <a-sky color="black"></a-sky>
+
+    <a-entity class="RBsCube">
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="0 0 0" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 0; speed: 2"></a-gltf-model>
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="0 0 2" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 2; speed: 2"></a-gltf-model>
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="2 0 0" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 2; speed: 2"></a-gltf-model>
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="2 0 2" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 2; speed: 2"></a-gltf-model>
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="0 0 -2" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 2; speed: 2"></a-gltf-model>
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="-2 0 0" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 2; speed: 2"></a-gltf-model>
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="-2 0 -2" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 2; speed: 2"></a-gltf-model>
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="2 0 -2" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 2; speed: 2"></a-gltf-model>
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="-2 0 2" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 2; speed: 2"></a-gltf-model>
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="0 2 0" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 0; speed: 2"></a-gltf-model>
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="0 2 2" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 2; speed: 2"></a-gltf-model>
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="2 2 0" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 2; speed: 2"></a-gltf-model>
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="2 2 2" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 2; speed: 2"></a-gltf-model>
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="0 2 -2" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 2; speed: 2"></a-gltf-model>
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="-2 2 0" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 2; speed: 2"></a-gltf-model>
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="-2 2 -2" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 2; speed: 2"></a-gltf-model>
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="2 2 -2" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 2; speed: 2"></a-gltf-model>
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="-2 2 2" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 2; speed: 2"></a-gltf-model>
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="0 -2 0" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 0; speed: 2"></a-gltf-model>
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="0 -2 2" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 2; speed: 2"></a-gltf-model>
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="2 -2 0" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 2; speed: 2"></a-gltf-model>
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="2 -2 2" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 2; speed: 2"></a-gltf-model>
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="0 -2 -2" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 2; speed: 2"></a-gltf-model>
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="-2 -2 0" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 2; speed: 2"></a-gltf-model>
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="-2 -2 -2" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 2; speed: 2"></a-gltf-model>
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="2 -2 -2" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 2; speed: 2"></a-gltf-model>
+        <a-gltf-model src="#cube" class="cube" keyboard-listener position="-2 -2 2" rotation="0 0 0" scale="2 2 2" move-and-rotate="radius: 2; speed: 2"></a-gltf-model>
+    </a-entity>
+
+
+    <a-assets>
+        <img id="my-image" src="../image.png">
+        <a-asset-item id="cube" src="../../RBsCubeWorldOrigin.glb"></a-asset-item>
+    </a-assets>
+
+    <a-curvedimage
+            src="#my-image"
+            height="200"
+            radius="140"
+            theta-length="160"
+            rotation="0 120 0"
+            scale="1 1 1"
+            position="0 0 0">
+    </a-curvedimage>
+
+    <a-curvedimage
+            color="#570000"
+            metalness="10"
+            rotation="0 0 0"
+            position="0 -1 0"
+            height="0.2"
+            radius="5"
+            theta-length="360">
+    </a-curvedimage>
+
+    <a-sky color="black"></a-sky>
+
+    <a-text
+            value="Dev Mode"
+            color="white"
+            width="10"
+            font="https://cdn.aframe.io/fonts/DejaVu-sdf.fnt"
+            position="-1 11 0">
+    </a-text>
+
+    <a-torus-knot
+            color="#B84A39"
+            arc="180"
+            p="2"
+            q="9"
+            radius="1"
+            radius-tubular="0.05"
+            position="-10 25 -60">
+    </a-torus-knot>
+
+
+</a-scene>
+
+</body>
+</html>

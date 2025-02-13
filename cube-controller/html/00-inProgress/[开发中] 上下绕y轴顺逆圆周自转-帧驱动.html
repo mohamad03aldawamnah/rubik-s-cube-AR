@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <script>
+        AFRAME.registerComponent('rbs-cube-controller', {
+            schema: {
+                speed: { type: 'number', default: 2 }
+            },
+
+            init: function () {
+                this.cubes = this.el.querySelectorAll('.cube');
+                this.bindKeyEvents();
+            },
+
+            bindKeyEvents: function () {
+                window.addEventListener('keydown', (event) => {
+                    const key = event.key.toLowerCase();
+
+                    // Y 轴旋转
+                    if (key === 'r' || key === 'c') {
+                        this.rotateLayer('lowest', key === 'r' ? 'clockwise' : 'anticlockwise', 'y');
+                    } else if (key === 'f' || key === 'v') {
+                        this.rotateLayer('highest', key === 'f' ? 'clockwise' : 'anticlockwise', 'y');
+                    }
+
+                    // X 轴旋转
+                    if (key === 'u' || key === 'd') {
+                        this.rotateLayer('left', key === 'u' ? 'clockwise' : 'anticlockwise', 'x');
+                    } else if (key === 'j' || key === 'k') {
+                        this.rotateLayer('right', key === 'j' ? 'clockwise' : 'anticlockwise', 'x');
+                    }
+                });
+            },
+
+            rotateLayer: function (layer, direction, axis) {
+                const targetCubes = this.getCubesByLayer(layer, axis);
+
+                targetCubes.forEach(cube => {
+                    const moveAndRotate = cube.components['move-and-rotate'];
+                    if (moveAndRotate) {
+                        moveAndRotate.setAxis(axis);
+                        if (direction === 'clockwise') {
+                            moveAndRotate.startMovementClock();
+                        } else {
+                            moveAndRotate.startMovementAntiClock();
+                        }
+                    }
+                });
+            },
+
+            getCubesByLayer: function (layer, axis) {
+                const allCubes = Array.from(this.cubes);
+
+                if (axis === 'y') {
+                    let targetY;
+                    if (layer === 'lowest') {
+                        targetY = Math.min(...allCubes.map(cube => cube.object3D.position.y));
+                    } else if (layer === 'highest') {
+                        targetY = Math.max(...allCubes.map(cube => cube.object3D.position.y));
+                    }
+                    return allCubes.filter(cube => cube.object3D.position.y === targetY);
+                } else if (axis === 'x') {
+                    let targetX;
+                    if (layer === 'left') {
+                        targetX = Math.min(...allCubes.map(cube => cube.object3D.position.x));
+                    } else if (layer === 'right') {
+                        targetX = Math.max(...allCubes.map(cube => cube.object3D.position.x));
+                    }
+                    return allCubes.filter(cube => cube.object3D.position.x === targetX);
+                }
+            }
+        });
+
+
+        AFRAME.registerComponent('move-and-rotate', {
+            schema: {
+                speed: { type: 'number', default: 2 },
+                axis: { type: 'string', default: 'y' }
+            },
+
+            init: function () {
+                // 初始化位置和角度
+                const pos = this.el.object3D.position;
+                this.initialX = pos.x;
+                this.initialY = pos.y;
+                this.initialZ = pos.z;
+
+                // 根据初始轴设置角度
+                if (this.data.axis === 'y') {
+                    this.angle = Math.atan2(this.initialZ, this.initialX);
+                } else if (this.data.axis === 'x') {
+                    this.angle = Math.atan2(this.initialZ, this.initialY);
+                }
+
+                // 状态控制
+                this.targetAngle = null;
+                this.currentRotation = 0;
+                this.targetRotation = null;
+                this.isMoving = false;
+
+                // 计算半径
+                this.radius = this.calculateRadius();
+                console.log(`Initialized: axis=${this.data.axis}, radius=${this.radius.toFixed(2)}`);
+            },
+
+            setAxis: function (axis) {
+                // 动态切换旋转轴时重置角度计算
+                this.data.axis = axis;
+                const pos = this.el.object3D.position;
+
+                if (axis === 'y') {
+                    this.angle = Math.atan2(pos.z, pos.x);
+                } else if (axis === 'x') {
+                    this.angle = Math.atan2(pos.z, pos.y);
+                }
+
+                console.log(`Axis changed to: ${axis}, new angle: ${this.angle.toFixed(2)}`);
+            },
+
+            calculateRadius: function () {
+                const pos = this.el.getAttribute('position');
+                const x = Math.round(pos.x);
+                const y = Math.round(pos.y);
+                const z = Math.round(pos.z);
+
+                if (this.isCenterCube(x, y, z)) {
+                    return 0;
+                } else if (this.isEdgeCube(x, y, z)) {
+                    return 2;
+                } else if (this.isCornerCube(x, y, z)) {
+                    return 2 * Math.sqrt(2);
+                }
+                return 0;
+            },
+
+            isCenterCube: function (x, y, z) {
+                return (
+                    (x === 0 && y === 0 && Math.abs(z) === 2) ||  // Z轴中心
+                    (x === 0 && Math.abs(y) === 2 && z === 0) ||   // Y轴中心
+                    (Math.abs(x) === 2 && y === 0 && z === 0)      // X轴中心
+                );
+            },
+
+            isEdgeCube: function (x, y, z) {
+                return (
+                    (Math.abs(x) === 2 && Math.abs(y) === 2 && z === 0) ||  // XY平面棱
+                    (Math.abs(x) === 2 && y === 0 && Math.abs(z) === 2) ||  // XZ平面棱
+                    (x === 0 && Math.abs(y) === 2 && Math.abs(z) === 2)     // YZ平面棱
+                );
+            },
+
+            isCornerCube: function (x, y, z) {
+                return Math.abs(x) === 2 && Math.abs(y) === 2 && Math.abs(z) === 2;
+            },
+
+            startMovementClock: function () {
+                if (this.isMoving) return;
+                this.isMoving = true;
+                console.log(`Starting CLOCKWISE movement (axis=${this.data.axis})`);
+
+                if (this.radius === 0) {
+                    this.targetRotation = this.currentRotation - 90;
+                } else {
+                    this.targetAngle = this.angle + Math.PI / 2;
+                    this.targetRotation = this.currentRotation - 90;
+                }
+            },
+
+            startMovementAntiClock: function () {
+                if (this.isMoving) return;
+                this.isMoving = true;
+                console.log(`Starting ANTICLOCKWISE movement (axis=${this.data.axis})`);
+
+                if (this.radius === 0) {
+                    this.targetRotation = this.currentRotation + 90;
+                } else {
+                    this.targetAngle = this.angle - Math.PI / 2;
+                    this.targetRotation = this.currentRotation + 90;
+                }
+            },
+
+            tick: function (time, timeDelta) {
+                if (!this.isMoving) return;
+
+                const rotationComplete = this.updateAxisRotation(timeDelta);
+                const positionComplete = this.radius === 0 ? true : this.updateCircularMovement(timeDelta);
+
+                if (rotationComplete && positionComplete) {
+                    this.isMoving = false;
+                    console.log("Movement completed");
+                }
+            },
+
+            updateAxisRotation: function (timeDelta) {
+                const rotationStep = (timeDelta / 1000) * this.data.speed * 60;
+
+                // 更新当前旋转角度
+                if (this.currentRotation < this.targetRotation) {
+                    this.currentRotation = Math.min(this.currentRotation + rotationStep, this.targetRotation);
+                } else {
+                    this.currentRotation = Math.max(this.currentRotation - rotationStep, this.targetRotation);
+                }
+
+                // 应用旋转
+                switch (this.data.axis) {
+                    case 'x':
+                        this.el.object3D.rotation.x = THREE.MathUtils.degToRad(this.currentRotation);
+                        break;
+                    case 'y':
+                        this.el.object3D.rotation.y = THREE.MathUtils.degToRad(this.currentRotation);
+                        break;
+                    case 'z':
+                        this.el.object3D.rotation.z = THREE.MathUtils.degToRad(this.currentRotation);
+                        break;
+                }
+
+                return Math.abs(this.currentRotation - this.targetRotation) < 0.01;
+            },
+
+            updateCircularMovement: function (timeDelta) {
+                const step = (timeDelta / 1000) * this.data.speed;
+
+                // 更新角度
+                if (Math.abs(this.angle - this.targetAngle) < step) {
+                    this.angle = this.targetAngle;
+                } else {
+                    this.angle += (this.angle < this.targetAngle) ? step : -step;
+                }
+
+                // 根据轴计算新位置
+                let newX = this.initialX;
+                let newY = this.initialY;
+                let newZ = this.initialZ;
+
+                if (this.data.axis === 'y') {
+                    newX = this.radius * Math.cos(this.angle);
+                    newZ = this.radius * Math.sin(this.angle);
+                } else if (this.data.axis === 'x') {
+                    newY = this.radius * Math.cos(this.angle);
+                    newZ = this.radius * Math.sin(this.angle);
+                }
+
+                // 应用位置（保留3位小数防止抖动）
+                this.el.object3D.position.set(
+                    Math.round(newX * 1000) / 1000,
+                    Math.round(newY * 1000) / 1000,
+                    Math.round(newZ * 1000) / 1000
+                );
+
+                return Math.abs(this.angle - this.targetAngle) < 0.01;
+            }
+        });
+    </script>
+</head>
+<body style="margin: 0px; overflow: hidden;">
+        <a-scene>
+            <a-camera position="0 8 15"></a-camera>
+            <a-sky color="black"></a-sky>
+
+            <a-entity class="RBsCube" rbs-cube-controller>
+                <a-gltf-model src="#cube" class="cube" position="0 0 0" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+                <a-gltf-model src="#cube" class="cube" position="0 0 2" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+                <a-gltf-model src="#cube" class="cube" position="2 0 0" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+                <a-gltf-model src="#cube" class="cube" position="2 0 2" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+                <a-gltf-model src="#cube" class="cube" position="0 0 -2" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+                <a-gltf-model src="#cube" class="cube" position="-2 0 0" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+                <a-gltf-model src="#cube" class="cube" position="-2 0 -2" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+                <a-gltf-model src="#cube" class="cube" position="2 0 -2" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+                <a-gltf-model src="#cube" class="cube" position="-2 0 2" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+                <a-gltf-model src="#cube" class="cube" position="0 2 0" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+                <a-gltf-model src="#cube" class="cube" position="0 2 2" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+                <a-gltf-model src="#cube" class="cube" position="2 2 0" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+                <a-gltf-model src="#cube" class="cube" position="2 2 2" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+                <a-gltf-model src="#cube" class="cube" position="0 2 -2" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+                <a-gltf-model src="#cube" class="cube" position="-2 2 0" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+                <a-gltf-model src="#cube" class="cube" position="-2 2 -2" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+                <a-gltf-model src="#cube" class="cube" position="2 2 -2" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+                <a-gltf-model src="#cube" class="cube" position="-2 2 2" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+                <a-gltf-model src="#cube" class="cube" position="0 -2 0" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+                <a-gltf-model src="#cube" class="cube" position="0 -2 2" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+                <a-gltf-model src="#cube" class="cube" position="2 -2 0" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+                <a-gltf-model src="#cube" class="cube" position="2 -2 2" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+                <a-gltf-model src="#cube" class="cube" position="0 -2 -2" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+                <a-gltf-model src="#cube" class="cube" position="-2 -2 0" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+                <a-gltf-model src="#cube" class="cube" position="-2 -2 -2" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+                <a-gltf-model src="#cube" class="cube" position="2 -2 -2" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+                <a-gltf-model src="#cube" class="cube" position="-2 -2 2" rotation="0 0 0" scale="2 2 2" move-and-rotate ></a-gltf-model>
+            </a-entity>
+
+            <a-assets>
+                <img id="my-image" src="../image.png">
+                <a-asset-item id="cube" src="../../RBsCubeWorldOrigin.glb"></a-asset-item>
+            </a-assets>
+
+            <a-curvedimage
+                  src="#my-image"
+                  height="200"
+                  radius="140"
+                  theta-length="160"
+                  rotation="0 120 0"
+                  scale="1 1 1"
+                  position="0 0 0">
+            </a-curvedimage>
+
+            <a-curvedimage
+                  color="#570000"
+                  metalness="10"
+                  rotation="0 0 0"
+                  position="0 -1 0"
+                  height="0.2"
+                  radius="5"
+                  theta-length="360">
+            </a-curvedimage>
+
+            <a-sky color="black"></a-sky>
+
+            <a-text
+                value="Dev Mode"
+                color="white"
+                width="10"
+                font="https://cdn.aframe.io/fonts/DejaVu-sdf.fnt"
+                position="-1 11 0">
+            </a-text>
+
+            <a-torus-knot
+                  color="#B84A39"
+                  arc="180"
+                  p="2"
+                  q="9"
+                  radius="1"
+                  radius-tubular="0.05"
+                  position="-10 25 -60">
+            </a-torus-knot>
+        </a-scene>
+    </body>
+</html>
