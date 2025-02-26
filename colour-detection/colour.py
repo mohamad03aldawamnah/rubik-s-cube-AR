@@ -52,9 +52,9 @@ def rgb_detection():
     print("✅ Camera successfully accessed.")
 
     positions = [
-        (-60, -60), (0, -60), (60, -60),
-        (-60, 0), (0, 0), (60, 0),
-        (-60, 60), (0, 60), (60, 60)
+        (-120, -120), (0, -120), (120, -120),
+        (-120, 0), (0, 0), (120, 0),
+        (-120, 120), (0, 120), (120, 120)
     ]
 
     detected_colors = [[None for _ in range(3)] for _ in range(3)]
