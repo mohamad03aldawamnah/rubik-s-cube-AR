@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask import Flask, request, redirect, jsonify, render_template, Response, send_from_directory
 import cv2
 import json
@@ -49,6 +50,11 @@ def get_color_from_hsv(h, s, v):
     elif 90 <= h < 150:
         return (0, 0, 255)  # Blue
     return (0, 0, 0)  # Default Black (error)
+
+
+def print(param):
+    pass
+
 
 def detect_cube_colors():
     """Captures cube face colors and returns a 3x3 grid of detected colors."""
