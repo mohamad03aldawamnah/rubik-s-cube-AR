@@ -18,6 +18,28 @@
 This project leverages Augmented Reality (AR), color detection program, and an efficient solving algorithm to create an interactive and educational Rubik’s Cube solving experience.
 
 ## 2. Getting Started
+### 2.1 One-Command Service Startup in one terminal
+This is a convenient way to start all the services while is not highly recommended unless the environment and dependencies are configured.
+To start with, make sure `npm` tools and python are already installed before starting with the start-run instruction commands.
+1. Install the dependencies with command: ```npm install```
+2. Start running all the services with command: ```npm start```
+3. Now, you can visit the front-end ```localhost``` website.
+### 2.2 Run different services in parallels separately with multiple terminals (Recommended)
+#### 2.2.1 Run the Colour-Detection-Services
+1. ```cd``` to the ```colour-detection-cube-solver```: ```cd colour-detection-cube-solver```
+2. Make sure you already have the ```pip``` tool to install the ```pipenv```
+3. Install ```pipenv```: ```pip install pipenv```
+4. Install the dependencies for python program: ```pipenv install```
+5. Start running the colour-Detection-Services: ```pipenv run python colour.py```
+#### 2.2.2 Run the backend Services
+1. ```cd``` to the ```backend```: ```cd backend```
+2. Install the dependencies with command: ```npm install```
+3. Start running all the services with command: ```npm start```
+#### 2.2.3 Run the frontend Service
+1. ```cd``` to the ```frontend```: ```cd frontend```
+2. Install the dependencies with command: ```npm install```
+3. Start running all the services with command: ```npm run dev```
+4. Now, you can visit the front-end ```localhost``` website
 
 ## 3. Components
 - Color Detection
@@ -33,12 +55,12 @@ This project leverages Augmented Reality (AR), color detection program, and an e
 ## 5. Team Contributions
 - **Mohamad Aldawansh**
 - **Junjie Zheng Feng**
-    - Designed the Rubik’s Cube Model
-    - Designed the Rubik’s Cube Controller
-    - Maintained the repository file structure
-    - Implemented frontend-backend separation
-    - Developed frontend Vue framework and configured routes
-    - Designed the homepage using Figma and decorated with CSS
+  - Designed the Rubik’s Cube Model
+  - Designed the Rubik’s Cube Controller
+  - Maintained the repository file structure
+  - Implemented frontend-backend separation
+  - Developed frontend Vue framework and configured routes
+  - Designed the homepage using Figma and decorated with CSS
 - **Daniel Jack Flynn**
 - **Darragh Micheal Broderick**
 
