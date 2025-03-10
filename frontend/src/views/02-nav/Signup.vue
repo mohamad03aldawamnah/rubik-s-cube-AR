@@ -1,4 +1,4 @@
-<!-- src/views/Introduction.vue -->
+<!-- src/views/Signup.vue -->
 <template>
   <div id="page-frame">
     <Header />
@@ -24,7 +24,7 @@ import Header from '../../components/Header.vue';
   justify-content: center;
   background: linear-gradient(227deg, #165b9c 20.72%, #81bee4 78.01%);
   border-radius: 30px;
-  width: fit-content; /* 设置为 fit-content */
+  width: fit-content;
   margin: auto;
   padding: 20px;
   box-sizing: border-box;
