@@ -8,14 +8,22 @@
 ## Table of Contents
 
 - [1. Overview](#1-overview)
+  - [1.1. Core-Positioning](#11-core-positioning)
 - [2. Getting Started](#2-getting-started)
+  - [2.1  One-Command Service Startup in one terminal
+    ](#21-one-command-service-startup-in-one-terminal)
+  - [2.2 Run different services in parallels separately with multiple terminals
+    ](#22-run-different-services-in-parallels-separately-with-multiple-terminals-recommended)
 - [3. Components](#3-components)
 - [4. Challenges and Solutions](#4-challenges-and-solutions)
 - [5. Team Contributions](#5-team-contributions)
 
 ## 1. Overview
 ### 1.1 Core-Positioning
-This project leverages Augmented Reality (AR), color detection program, and an efficient solving algorithm to create an interactive and educational Rubik’s Cube solving experience.
+This project leverages Augmented Reality (AR), color detection program, and an efficient solving algorithm to create an interactive and educational Rubik’s Cube solving experience. It addresses three major challenges in traditional Rubik’s Cube teaching:
+- **Portable Virtual Cube**: Play AR or VR versions of the virtual Rubik's Cube anytime, anywhere.
+- **Scramble Pattern Database**: Save and manage scrambled cube templates, enabling a variety of gameplay possibilities.
+- **Optimal Solving Algorithm**: Utilize algorithmic support to provide users with the most efficient solving solutions.
 
 ## 2. Getting Started
 ### 2.1 One-Command Service Startup in one terminal
@@ -42,15 +50,15 @@ To start with, make sure `npm` tools and python are already installed before sta
 4. Now, you can visit the front-end ```localhost``` website
 
 ## 3. Components
-- Color Detection
-- Rubik’s Cube Solving Algorithm
-- Rubik’s Cube Model
-- Rubik’s Cube Controller
-- Frontend Web Framework
+### 3.1 Color Detection
+### 3.2 Rubik’s Cube Solving Algorithm
+### 3.3 Rubik’s Cube Model
+### 3.4 Rubik’s Cube Controller
+### 3.5 Frontend Web Framework
 
 ## 4. Challenges and Solutions
-- Creating the Rubik’s Cube Model
-- Solving the Rubik’s Cube Controller
+### 4.1 Creating the Rubik’s Cube Model
+### 4.2 Solving the Rubik’s Cube Controller
 
 ## 5. Team Contributions
 - **Mohamad Aldawansh**
