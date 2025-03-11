@@ -24,7 +24,7 @@ This project leverages Augmented Reality (AR), color detection program, and an e
 - **Portable Virtual Cube**: Play AR or VR versions of the virtual Rubik's Cube anytime, anywhere.
 - **Scramble Pattern Database**: Save and manage scrambled cube templates, enabling a variety of gameplay possibilities.
 - **Optimal Solving Algorithm**: Utilize algorithmic support to provide users with the most efficient solving solutions.
-### 1.2 System Architecture Diagram 
+### 1.2 System Architecture Diagram
 The system follows a layered web-based architecture:
 - Perception Layer
 - Logical Layer
@@ -122,6 +122,10 @@ To start with, make sure `npm` tools and python are already installed before sta
   - Designed the homepage using Figma and decorated with CSS
 - **Daniel Jack Flynn**
 - **Darragh Micheal Broderick**
+  - Designed parts of user interface using html and CSS
+  - Added animations to parts of the homepage using javascript
+  - Connected the colour detection software webpage to the AR environment webpage using python and javascript
+  - Created instructions on how to help users understand how to use the application
 
 <!-- links -->
 [your-project-path]:mohamad03aldawamnah/rubik-s-cube-AR

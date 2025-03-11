@@ -122,6 +122,10 @@ To start with, make sure `npm` tools and python are already installed before sta
   - Designed the homepage using Figma and decorated with CSS
 - **Daniel Jack Flynn**
 - **Darragh Micheal Broderick**
+  - Designed parts of user interface using html and CSS
+  - Added animations to parts of the homepage using javascript
+  - Connected the colour detection software webpage to the AR environment webpage using python and javascript
+  - Created instructions on how to help users understand how to use the application
 
 <!-- links -->
 [your-project-path]:mohamad03aldawamnah/rubik-s-cube-AR
