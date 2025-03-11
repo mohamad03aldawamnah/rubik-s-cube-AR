@@ -87,6 +87,7 @@ The system follows a layered web-based architecture:
 </details>
 
 Here is the SVG-based **top-down graph**:
+
 ![A Top-Down SVG-based Graph](/.github/images/team7_diagram1.svg)
 
 ## 2. Getting Started
