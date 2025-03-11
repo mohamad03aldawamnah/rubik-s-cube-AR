@@ -32,49 +32,55 @@ The system follows a layered web-based architecture:
 - **Data Layer**: This layer manages the backend operations and data storage. It includes **an Express.js backend API** for handling requests and **MongoDB** for database storage to persist cube states and other relevant data.
 - **Control Layer**: This layer manages the **control flow** and **user interactions**. It includes the start and scan processes, as well as handling user interactions to ensure a smooth user experience.
 
-Here is the **Top-Down Graph** based on Mermaid Graph:
-```mermaid
-graph TD;
-  subgraph Perception_Layer["Perception Layer"]
-    A[Color-Detection-OpenCV/cv2]
-  end
+<details>
+  <summary>A Top-Down <strong>Mermaid-based </strong>Graph:</summary>
+  ```mermaid
+  graph TD;
+    subgraph Perception_Layer["Perception Layer"]
+      A[Color-Detection-OpenCV/cv2]
+    end
+  
+    subgraph Logic_Layer["Logic-Layer"]
+      B1[RGB-Colour-Convertor]
+      B2[CubeSolving Algorithm-Cube.js]
+    end
+  
+    subgraph Rendering_Layer["Rendering-Layer"]
+      C1[Cube-Controller-Three.js]
+      C2[Virtual Cube Rendering - A-Frame.js]
+      C3[Frontend Framework - Vue, statics.html]
+    end
+  
+    subgraph Data_Layer["Data Layer"]
+      D1[Backend API - Express.js]
+      D2[Database Storage - MongoDB]
+    end
+  
+      subgraph Control-Layer["Control Layer"]
+      E1[Start]
+      E2[Scan]
+      E3[User-Interaction]
+    end
+  
+    A -->|RGB Data| B1
+    B1 --> |Color-Cube-Data| B2
+    B2 -->|Solution-&-Scramble-Steps| C1
+    C1 -->|Rendered Cube| C2
+    C2 -->|User Interaction| C3
+    C3 -->|Frontend Requests| D1
+    D1 -->|Data Persistence| D2
+    D2 -->|Stored Cube States| D1
+    E1 --> E2
+    E2 --> A
+    E3 --> C1
+    D1 --> C1
+    ```
+</details>
 
-  subgraph Logic_Layer["Logic-Layer"]
-    B1[RGB-Colour-Convertor]
-    B2[CubeSolving Algorithm-Cube.js]
-  end
-
-  subgraph Rendering_Layer["Rendering-Layer"]
-    C1[Cube-Controller-Three.js]
-    C2[Virtual Cube Rendering - A-Frame.js]
-    C3[Frontend Framework - Vue, statics.html]
-  end
-
-  subgraph Data_Layer["Data Layer"]
-    D1[Backend API - Express.js]
-    D2[Database Storage - MongoDB]
-  end
-
-    subgraph Control-Layer["Control Layer"]
-    E1[Start]
-    E2[Scan]
-    E3[User-Interaction]
-  end
-
-  A -->|RGB Data| B1
-  B1 --> |Color-Cube-Data| B2
-  B2 -->|Solution-&-Scramble-Steps| C1
-  C1 -->|Rendered Cube| C2
-  C2 -->|User Interaction| C3
-  C3 -->|Frontend Requests| D1
-  D1 -->|Data Persistence| D2
-  D2 -->|Stored Cube States| D1
-  E1 --> E2
-  E2 --> A
-  E3 --> C1
-  D1 --> C1
-```
-
+<details>
+  <summary>A Top-Down <strong>SVG-based</strong> Graph:</summary>
+    <img src="/.github/images/mermaid-diagram.svg" alt="A Top-Down SVG-based Graph">
+</details>
 
 ## 2. Getting Started
 ### 2.1 ```One-Command``` Service Startup in one ```terminal```
