@@ -79,7 +79,7 @@ The system follows a layered web-based architecture:
 
 <details>
   <summary>A Top-Down <strong>SVG-based</strong> Graph:</summary>
-    <img src="/.github/images/mermaid-diagram.svg" alt="A Top-Down SVG-based Graph">
+    <img src="/.github/images/team7_diagram1.svg" alt="A Top-Down SVG-based Graph">
 </details>
 
 ## 2. Getting Started
