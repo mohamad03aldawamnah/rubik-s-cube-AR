@@ -26,13 +26,13 @@ This project leverages Augmented Reality (AR), color detection program, and an e
 - **Optimal Solving Algorithm**: Utilize algorithmic support to provide users with the most efficient solving solutions.
 ### 1.2 System Architecture Diagram
 The system follows a layered web-based architecture:
-- Perception Layer
-- Logical Layer
-- Rendering Layer
-- Data Layer
-- Control Layer
+- **Perception Layer**: This layer is responsible for capturing and processing the initial data. It uses OpenCV for color detection, which is crucial for identifying the **colors(RGB-Values)** on the Rubik's Cube.
+- **Logical Layer**: This layer handles the core logic of the system. It includes **an RGB color converter** to process the color data and **a cube-solving algorithm** implemented in **Cube.js** to determine the solution steps.
+- **Rendering Layer**: This layer is responsible for rendering the virtual cube and providing the user interface. It uses **Three.js** for cube control, **A-Frame.js** for virtual cube rendering, and **Vue.js** along with **static HTML** for the frontend framework.
+- **Data Layer**: This layer manages the backend operations and data storage. It includes **an Express.js backend API** for handling requests and **MongoDB** for database storage to persist cube states and other relevant data.
+- **Control Layer**: This layer manages the **control flow** and **user interactions**. It includes the start and scan processes, as well as handling user interactions to ensure a smooth user experience.
 
-
+Here is the **Top-Down Graph** based on Mermaid Graph:
 ```mermaid
 graph TD;
   subgraph Perception_Layer["Perception Layer"]
@@ -77,28 +77,28 @@ graph TD;
 
 
 ## 2. Getting Started
-### 2.1 One-Command Service Startup in one terminal
-This is a convenient way to start all the services while is not highly recommended unless the environment and dependencies are configured.
+### 2.1 ```One-Command``` Service Startup in one ```terminal```
+This is **a convenient way** to start all the services while is not highly recommended unless the environment and dependencies are configured.
 To start with, make sure `npm` tools and python are already installed before starting with the start-run instruction commands.
-1. Install the dependencies with command: ```npm install```
-2. Start running all the services with command: ```npm start```
-3. Now, you can visit the front-end ```localhost``` website.
-### 2.2 Run different services in parallels separately with multiple terminals (Recommended)
+1. **Install the dependencies with command**: ```npm install```
+2. **Start running all the services with command**: ```npm start```
+3. **Now, you can visit the front-end** ```localhost``` website.
+### 2.2 Run different services in parallels separately with multiple ```terminals``` (Recommended)
 #### 2.2.1 Run the Colour-Detection-Services
-1. ```cd``` to the ```colour-detection-cube-solver```: ```cd colour-detection-cube-solver```
-2. Make sure you already have the ```pip``` tool to install the ```pipenv```
-3. Install ```pipenv```: ```pip install pipenv```
-4. Install the dependencies for python program: ```pipenv install```
-5. Start running the colour-Detection-Services: ```pipenv run python colour.py```
+1. **```cd``` to the ```colour-detection-cube-solver```**: ```cd colour-detection-cube-solver```
+2. **Make sure you already have the ```pip``` tool to install the ```pipenv```**
+3. **Install ```pipenv```**: ```pip install pipenv```
+4. **Install the dependencies for python program**: ```pipenv install```
+5. **Start running the colour-Detection-Services**: ```pipenv run python colour.py```
 #### 2.2.2 Run the backend Services
-1. ```cd``` to the ```backend```: ```cd backend```
-2. Install the dependencies with command: ```npm install```
-3. Start running all the services with command: ```npm start```
+1. **```cd``` to the ```backend```**: ```cd backend```
+2. **Install the dependencies with command**: ```npm install```
+3. **Start running all the services with command**: ```npm start```
 #### 2.2.3 Run the frontend Service
-1. ```cd``` to the ```frontend```: ```cd frontend```
-2. Install the dependencies with command: ```npm install```
-3. Start running all the services with command: ```npm run dev```
-4. Now, you can visit the front-end ```localhost``` website
+1. **```cd``` to the ```frontend```**: ```cd frontend```
+2. **Install the dependencies with command**: ```npm install```
+3. **Start running all the services with command**: ```npm run dev```
+4. **Now, you can visit the front-end ```localhost``` website**
 
 ## 3. Components
 ### 3.1 Color Detection
