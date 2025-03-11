@@ -24,6 +24,57 @@ This project leverages Augmented Reality (AR), color detection program, and an e
 - **Portable Virtual Cube**: Play AR or VR versions of the virtual Rubik's Cube anytime, anywhere.
 - **Scramble Pattern Database**: Save and manage scrambled cube templates, enabling a variety of gameplay possibilities.
 - **Optimal Solving Algorithm**: Utilize algorithmic support to provide users with the most efficient solving solutions.
+### 1.2 System Architecture Diagram
+The system follows a layered web-based architecture:
+- Perception Layer
+- Logical Layer
+- Rendering Layer
+- Data Layer
+- Control Layer
+
+
+```mermaid
+graph TD;
+  subgraph Perception_Layer["Perception Layer"]
+    A[Color-Detection-OpenCV/cv2]
+  end
+
+  subgraph Logic_Layer["Logic-Layer"]
+    B1[RGB-Colour-Convertor]
+    B2[CubeSolving Algorithm-Cube.js]
+  end
+
+  subgraph Rendering_Layer["Rendering-Layer"]
+    C1[Cube-Controller-Three.js]
+    C2[Virtual Cube Rendering - A-Frame.js]
+    C3[Frontend Framework - Vue, statics.html]
+  end
+
+  subgraph Data_Layer["Data Layer"]
+    D1[Backend API - Express.js]
+    D2[Database Storage - MongoDB]
+  end
+
+    subgraph Control-Layer["Control Layer"]
+    E1[Start]
+    E2[Scan]
+    E3[User-Interaction]
+  end
+
+  A -->|RGB Data| B1
+  B1 --> |Color-Cube-Data| B2
+  B2 -->|Solution-&-Scramble-Steps| C1
+  C1 -->|Rendered Cube| C2
+  C2 -->|User Interaction| C3
+  C3 -->|Frontend Requests| D1
+  D1 -->|Data Persistence| D2
+  D2 -->|Stored Cube States| D1
+  E1 --> E2
+  E2 --> A
+  E3 --> C1
+  D1 --> C1
+```
+
 
 ## 2. Getting Started
 ### 2.1 One-Command Service Startup in one terminal
@@ -71,12 +122,6 @@ To start with, make sure `npm` tools and python are already installed before sta
   - Designed the homepage using Figma and decorated with CSS
 - **Daniel Jack Flynn**
 - **Darragh Micheal Broderick**
-  - Designed parts of user interface using html and CSS
-  - Added animations to parts of the homepage using javascript
-  - Connected the colour detection software webpage to the AR environment webpage using python and javascript
-  - Created instructions on how to help users understand how to use the application
-
-
 
 <!-- links -->
 [your-project-path]:mohamad03aldawamnah/rubik-s-cube-AR
