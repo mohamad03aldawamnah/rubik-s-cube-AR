@@ -1,4 +1,4 @@
-<!-- src/views/01-homepage/junjiehome.vue -->
+<!-- src/views/01-homepage/dev-home.vue -->
 <template>
   <div id="home-frame">
     <Header />

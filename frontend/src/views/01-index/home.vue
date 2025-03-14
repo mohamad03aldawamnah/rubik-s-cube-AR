@@ -5,8 +5,9 @@
     <div class="main">
       <img id="home-img" src="/images/junjiehome.png" />
       <div id="home-content">
-            <iframe src="/pages/01-homepage/Darraghsindex.html"></iframe>
-            <a href="/pages/01-homepage/Darraghsindex.html">Full-Screen</a>
+        <DarrIndex></DarrIndex>
+<!--        <iframe src="/pages/01-homepage/Darraghsindex.html"></iframe>-->
+<!--        <a href="/pages/01-homepage/Darraghsindex.html">Full-Screen</a>-->
       </div>
     </div>
   </div>
@@ -14,6 +15,7 @@
 
 <script setup>
 import Header from '../../components/Header.vue';
+import DarrIndex from "@/views/01-index/DarrIndex.vue";
 </script>
 
 <style scoped>
@@ -52,16 +54,13 @@ iframe{
 #home-content {
   flex: 1;
   text-align: center;
-  border-radius: 27px;
+  border-radius: 30px;
   background-color: skyblue;
-  padding-top: 3vh;
-  padding-bottom: 3vh;
-  padding-left: 1%;
-  padding-right: 1%;
   box-sizing: border-box;
   margin-inline: 2vh;
   margin-top: clamp(2vh, 1vh, 10%);
   margin-bottom: clamp(2vh, 1vh, 10%);
+  aspect-ratio: 1 / 1;
 }
 
 #home-content h1 {
