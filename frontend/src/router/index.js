@@ -7,8 +7,7 @@ import AframeTemplate from '@/views/03-in-progress/aframe-template.vue';
 import Introduction from '../views/02-nav/Introduction.vue';
 import About from '../views/02-nav/About.vue';
 import Signup from '../views/02-nav/Signup.vue';
-import Login from '../views/02-nav/Login.vue';
-import DarrIndex from "@/views/01-index/DarrIndex.vue";
+import Login from '../views/02-nav/Login.vue';;
 
 const routes = [
   {
@@ -50,11 +49,6 @@ const routes = [
     path: '/dev-home',
     name: 'dev-home',
     component: DevHome,
-  },
-  {
-    path: '/darr-index',
-    name: 'darr-index',
-    component: DarrIndex,
   }
 ];
 

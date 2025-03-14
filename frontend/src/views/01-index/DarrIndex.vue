@@ -12,6 +12,7 @@
         <li><a href="http://127.0.0.1:5000" class="home-container__link">Run and Scan</a></li>
         <li><a href="/pages/02-ar/ar-buttons.html" class="home-container__link">AR-Cube-Buttons-html</a></li>
         <li><a href="/pages/03-vr/vr-keyboard.html" class="home-container__link">VR-Keyboards-html</a></li>
+        <li><router-link to="/vr-dev" class="home-container__link">VR-DEV</router-link></li>
       </ul>
     </nav>
 
@@ -51,14 +52,13 @@ export default {
 </script>
 
 <style scoped>
-/* 容器样式，包括背景图 */
 .home-container {
   background-image: url(/images/Rubikcube.jpg);
   background-repeat: repeat;
   background-size: cover;
   border-radius: 30px;
   overflow: hidden;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 3;
 }
 
 
