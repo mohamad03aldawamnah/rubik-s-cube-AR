@@ -28,7 +28,7 @@
   justify-content: center;
   flex-wrap: wrap;
   border-radius: 30px;
-  width: 90%;
+  width: 80%;
   margin: 0 auto;
   box-sizing: border-box;
 }

@@ -6,8 +6,10 @@
     <nav class="home-container__nav">
       <button class="home-content__button home-content__button--blue" @click="showModal">Instructions</button>
       <a href="http://127.0.0.1:5000" class="home-content__button">Start-in-AR</a>
-<!--      <router-link to="/aframe-template" class="home-content__button">Test-A-Frame</router-link>-->
+      <a href="/pages/01-ar/ar-buttons.html" class="home-content__button">AR-Buttons.html</a>
+      <!--      <router-link to="/aframe-template" class="home-content__button">Test-A-Frame</router-link>-->
       <router-link to="/vr-keyboard" class="home-content__button">Play-in-VR</router-link>
+      <router-link to="/scanner" class="home-content__button">Scanner (new)</router-link>
     </nav>
 
 
@@ -55,8 +57,8 @@ export default {
   background-size: cover;
   box-sizing: border-box;
   height: 100%;
-  padding-top: 10vh;
-  padding-bottom: 10vh;
+  padding-top: 3vh;
+  padding-bottom: 3vh;
 }
 
 .home-container__title {

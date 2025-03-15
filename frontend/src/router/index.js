@@ -6,22 +6,24 @@ import About from '../views/02-nav/About.vue';
 import Signup from '../views/02-nav/Signup.vue';
 import Login from '../views/02-nav/Login.vue';
 // Home
-import Home from '@/views/01-index/home.vue';
-import DevHome from '@/views/01-index/dev-home.vue';
+import HomePage from '@/views/01-index/HomePage.vue';
+import HomeDev from '@/views/01-index/HomeDev.vue';
 // Dev
-import AframeTemplate from '@/views/03-in-progress/aframe-template.vue';
-import VrKeyboard from '@/views/03-in-progress/vr-keyboard.vue';
+import VrAframeDemo from '@/views/04-vr/vr-aframe-demo.vue';
+import VrKeyboard from '@/views/04-vr/vr-keyboard.vue';
+// Scanner
+import Scanner from "@/views/05-scanner/Scanner.vue";
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home,
+    component: HomePage,
   },
   {
     path: '/aframe-template',
     name: 'aframe-template',
-    component: AframeTemplate,
+    component: VrAframeDemo,
   },
   {
     path: '/introduction',
@@ -46,12 +48,17 @@ const routes = [
   {
     path: '/dev-home',
     name: 'dev-home',
-    component: DevHome,
+    component: HomeDev,
   },
   {
     path: '/vr-keyboard',
     name: 'vr-keyboard',
     component: VrKeyboard,
+  },
+  {
+    path: '/scanner',
+    name: 'scanner',
+    component: Scanner,
   }
 ];
 

@@ -8,11 +8,11 @@
         <h2>HTML</h2>
         <br>
         <button class="home-content__button home-content__button--blue" @click="showModal">Instructions</button>
-        <a href="/pages/01-ar/ar-buttons.html">AR-Buttons-HTML</a>
-        <a href="/pages/01-ar/ar-buttons-vr-cube.html">AR-BtnsCube-HTML</a>
-        <a href="/pages/01-ar/ar-keyboard.html">AR-Keyboard-HTML</a>
-        <a href="/pages/02-vr/vr-buttons.html">VR-Buttons-HTML</a>
-        <a href="/pages/02-vr/vr-keyboard.html">VR-Keyboard-HTML</a>
+        <a href="/pages/01-ar/ar-buttons.html">AR-Buttons.html</a>
+        <a href="/pages/01-ar/ar-buttons-vr-cube.html">AR-BtnsCube.html</a>
+        <a href="/pages/01-ar/ar-keyboard.html">AR-Keyboard.html</a>
+        <a href="/pages/02-vr/vr-buttons.html">VR-Buttons.html</a>
+        <a href="/pages/02-vr/vr-keyboard.html">VR-Keyboard.html</a>
       </div>
     </div>
 
@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import Header from '../../components/Header.vue';
+import Header from '@/components/headers/Header.vue';
 import { ref } from 'vue';
 
 const isModalVisible = ref(false);
@@ -60,7 +60,7 @@ const hideModal = () => {
   justify-content: center;
   flex-wrap: wrap;
   border-radius: 30px;
-  width: 95%;
+  width: 80%;
   margin: 0 auto;
   box-sizing: border-box;
 }
@@ -89,7 +89,7 @@ const hideModal = () => {
 #home-content h1 {
   font-size: clamp(45px, 5vw, 100px);
   font-family: "Gochi Hand", cursive;
-  margin-bottom: 1vh;
+  margin-bottom: 0.5vh;
   color: white;
 }
 
@@ -113,7 +113,7 @@ const hideModal = () => {
   line-height: 140%;
   width: 80%;
   margin: 0 auto;
-  margin-bottom: 5vh;
+  margin-bottom: 2.5vh;
 }
 
 #home-content a {
