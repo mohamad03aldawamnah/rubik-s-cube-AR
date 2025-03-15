@@ -28,7 +28,7 @@
   justify-content: center;
   flex-wrap: wrap;
   border-radius: 30px;
-  width: 95%;
+  width: 90%;
   margin: 0 auto;
   box-sizing: border-box;
 }
@@ -50,8 +50,8 @@
   margin-inline: 2vh;
   margin-top: clamp(2vh, 1vh, 10%);
   margin-bottom: clamp(2vh, 1vh, 10%);
-  aspect-ratio: 4 / 3;
   padding: 0 !important; /* 强制清除所有 padding */
+  height: clamp(2vh, 1vh, 10%);
   overflow-y: auto;
 }
 
@@ -59,6 +59,7 @@
   font-size: clamp(45px, 5vw, 100px);
   font-family: "Gochi Hand", cursive;
   margin-bottom: 1vh;
+  color: white;
 }
 
 #home-content h2 {

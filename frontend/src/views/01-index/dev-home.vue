@@ -80,10 +80,6 @@ const hideModal = () => {
   background-image: url(/images/Rubikcube.jpg);
   background-repeat: repeat;
   background-size: cover;
-  padding-top: 3vh;
-  padding-bottom: 3vh;
-  padding-left: 1%;
-  padding-right: 1%;
   box-sizing: border-box;
   margin-inline: 2vh;
   margin-top: clamp(2vh, 1vh, 10%);

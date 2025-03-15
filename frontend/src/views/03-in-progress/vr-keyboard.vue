@@ -3,7 +3,7 @@
   <HomeTemplate>
     <div class="scene-container">
       <!--    <a-scene>-->
-      <a-scene embedded>
+      <a-scene embedded class="a-scene">
         <a-assets>
           <a-asset-item id="cube" src="../../models/RBsCubeWorldOriginCube.glb"></a-asset-item>
         </a-assets>
@@ -64,9 +64,18 @@
 
 /* aframe-scene */
 .scene-container {
+  flex: 1;
+  text-align: center;
+  border-radius: 27px;
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
 }
+
+.a-scene {
+  width: auto;
+  height: 60vh;
+ }
 
 /* aframe-button */
 #control-buttons {
