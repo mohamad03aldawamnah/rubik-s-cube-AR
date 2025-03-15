@@ -19,6 +19,7 @@
   border-radius: 25px;
   padding-bottom: clamp(30px, 10vh, 500px);
   margin: 3px;
+
 }
 
 .main {
@@ -49,7 +50,9 @@
   margin-inline: 2vh;
   margin-top: clamp(2vh, 1vh, 10%);
   margin-bottom: clamp(2vh, 1vh, 10%);
-  aspect-ratio: 4/3;
+  aspect-ratio: 4 / 3;
+  padding: 0 !important; /* 强制清除所有 padding */
+  overflow-y: auto;
 }
 
 #home-content h1 {

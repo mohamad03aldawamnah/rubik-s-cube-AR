@@ -1,13 +1,16 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router';
-import Home from '@/views/01-index/home.vue';
-import DevHome from '@/views/01-index/dev-home.vue';
-import VrDev from '@/views/03-in-progress/vr-dev.vue';
-import AframeTemplate from '@/views/03-in-progress/aframe-template.vue';
+// Nav
 import Introduction from '../views/02-nav/Introduction.vue';
 import About from '../views/02-nav/About.vue';
 import Signup from '../views/02-nav/Signup.vue';
-import Login from '../views/02-nav/Login.vue';;
+import Login from '../views/02-nav/Login.vue';
+// Home
+import Home from '@/views/01-index/home.vue';
+import DevHome from '@/views/01-index/dev-home.vue';
+// Dev
+import AframeTemplate from '@/views/03-in-progress/aframe-template.vue';
+import VrKeyboard from '@/views/03-in-progress/vr-keyboard.vue';
 
 const routes = [
   {
@@ -19,11 +22,6 @@ const routes = [
     path: '/aframe-template',
     name: 'aframe-template',
     component: AframeTemplate,
-  },
-  {
-    path: '/vr-dev',
-    name: 'vr-dev',
-    component: VrDev,
   },
   {
     path: '/introduction',
@@ -49,6 +47,11 @@ const routes = [
     path: '/dev-home',
     name: 'dev-home',
     component: DevHome,
+  },
+  {
+    path: '/vr-keyboard',
+    name: 'vr-keyboard',
+    component: VrKeyboard,
   }
 ];
 
