@@ -34,7 +34,7 @@
 }
 
 #home-img {
-  width: clamp(250px, 30vw, 50vw);
+  width: 20%;
   height: auto;
   margin-top: 4vh;
   margin-bottom: 4vh;
@@ -112,7 +112,7 @@
   }
 
   #home-img {
-    width: 60vw !important;
+    width: 40% !important;
     margin: 20px auto !important;
   }
 
@@ -124,7 +124,7 @@
 
 @media (max-width: 450px) {
   #home-img {
-    width: 90% !important;
+    width: 50% !important;
     margin: 10px auto !important;
   }
 

@@ -8,9 +8,11 @@
         <h2>HTML</h2>
         <br>
         <button class="home-content__button home-content__button--blue" @click="showModal">Instructions</button>
-        <a href="/pages/02-ar/ar-buttons.html">AR-Buttons-HTML</a>
-        <a href="/pages/02-ar/ar-buttons-vr-cube.html">AR-BtnsCube-HTML</a>
-        <a href="/pages/03-vr/vr-buttons.html">VR-Buttons-HTML</a>
+        <a href="/pages/01-ar/ar-buttons.html">AR-Buttons-HTML</a>
+        <a href="/pages/01-ar/ar-buttons-vr-cube.html">AR-BtnsCube-HTML</a>
+        <a href="/pages/01-ar/ar-keyboard.html">AR-Keyboard-HTML</a>
+        <a href="/pages/02-vr/vr-buttons.html">VR-Buttons-HTML</a>
+        <a href="/pages/02-vr/vr-keyboard.html">VR-Keyboard-HTML</a>
       </div>
     </div>
 
@@ -64,7 +66,7 @@ const hideModal = () => {
 }
 
 #home-img {
-  width: clamp(250px, 30vw, 50vw);
+  width: 20%;
   height: auto;
   margin-top: 4vh;
   margin-bottom: 4vh;
@@ -252,7 +254,7 @@ const hideModal = () => {
   }
 
   #home-img {
-    width: 60vw !important;
+    width: 40% !important;
     margin: 20px auto !important;
   }
 
@@ -264,7 +266,7 @@ const hideModal = () => {
 
 @media (max-width: 450px) {
   #home-img {
-    width: 90% !important;
+    width: 40% !important;
     margin: 10px auto !important;
   }
 
