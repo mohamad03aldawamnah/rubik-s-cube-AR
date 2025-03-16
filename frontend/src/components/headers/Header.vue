@@ -5,7 +5,7 @@
       <router-link to="/">HOME</router-link>
       <router-link to="/dev-home">DEV</router-link>
       <router-link to="/introduction">INTRODUCTION</router-link>
-      <router-link to="/about">ABOUT-US</router-link>
+      <router-link to="/about">ABOUT</router-link>
 <!--      <router-link to="">SIGN UP</router-link>-->
 <!--      <router-link to="">LOGIN</router-link>-->
     </nav>

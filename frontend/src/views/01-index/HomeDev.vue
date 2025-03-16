@@ -4,28 +4,13 @@
         <img id="home-img" src="/images/junjiehome.png" />
         <div id="home-content">
           <h1>DEV-MODE</h1>
-          <h2>HTML</h2>
           <br>
-          <button class="home-content__button home-content__button--blue" @click="showModal">Instructions</button>
+          <router-link to="/aframe-template" class="home-content__button">A-Frame.vue</router-link>
           <a href="/pages/01-ar/ar-buttons.html">AR-Buttons.html</a>
           <a href="/pages/01-ar/ar-buttons-vr-cube.html">AR-BtnsCube.html</a>
           <a href="/pages/01-ar/ar-keyboard.html">AR-Keyboard.html</a>
           <a href="/pages/02-vr/vr-buttons.html">VR-Buttons.html</a>
           <a href="/pages/02-vr/vr-keyboard.html">VR-Keyboard.html</a>
-
-          <div v-if="isModalVisible" class="home-container__modal">
-            <div class="home-container__modal-content">
-              <span class="home-container__modal-close" @click="hideModal">×</span>
-              <h2>Program Instructions</h2>
-              <p>To start the program, click the "Run Program" button in the center of the home webpage.</p>
-              <img class="home-container__modal-image" src="/images/Instruction-arrow.png" alt="Instruction Arrow" />
-              <p>
-                To use the colour detection program, align the cube with the green dots in the center and click the "Detect Colours" button, then save and next.
-                Once you have scanned all six faces, a "Generate Cube" button will appear. Click it to create the cube. If you want to start scanning the cube from the beginning again, press the "Reset Cube" button.
-              </p>
-              <img class="home-container__modal-image" src="/images/ColourDetectInstructs.png" alt="Colour Detect Instructions" />
-            </div>
-          </div>
         </div>
   </HomeTemplate>
 </template>
@@ -78,7 +63,6 @@ const hideModal = () => {
   color: white;
   font-family: "Gochi Hand", cursive;
   text-align: center;
-  margin-bottom: 1vh;
 }
 
 #home-content h2 {
@@ -148,74 +132,6 @@ const hideModal = () => {
 
 .home-content__button--blue:hover {
   background-color: #0056b3;
-}
-
-.home-container__modal {
-  display: block;
-  position: fixed;
-  z-index: 1;
-  padding-top: 40px;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  opacity: 0;
-  transform: scale(0.9);
-  animation: fadeInScale 1s ease forwards;
-  background-color: rgba(0, 0, 0, 0.6);
-}
-
-.home-container__modal-content {
-  background-color: #69e97e;
-  margin: auto;
-  padding: 20px;
-  border: 0.5em solid #000000;
-  border-radius: 10px;
-  width: 90%;
-  max-width: 800px;
-  aspect-ratio: unset;
-  height: auto;
-  max-height: 90vh;
-  overflow-y: auto;
-  text-align: center;
-  font-family: Arial, sans-serif;
-}
-
-.home-container__modal-content h2 {
-  font-size: clamp(24px, 5vw, 40px);
-  font-weight: bold;
-  color: #000000;
-  margin-bottom: 16px;
-}
-
-.home-container__modal-content p {
-  font-size: clamp(16px, 3vw, 20px);
-  color: #333333;
-  line-height: 1.6;
-  margin-bottom: 16px;
-}
-
-.home-container__modal-close {
-  color: #000000;
-  float: right;
-  margin-right: 0.5em;
-  margin-top: 0.5em;
-  font-size: 40px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.home-container__modal-close:hover {
-  color: #ff0000;
-}
-
-.home-container__modal-image {
-  width: 100%;
-  height: auto;
-  max-width: 400px;
-  margin: 16px auto;
-  display: block;
 }
 
 @keyframes fadeInScale {

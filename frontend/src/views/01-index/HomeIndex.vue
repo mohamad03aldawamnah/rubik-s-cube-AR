@@ -6,11 +6,10 @@
 
       <nav class="home-container__nav">
         <button class="home-content__button home-content__button--blue" @click="showModal">Instructions</button>
-        <a href="http://127.0.0.1:5000" class="home-content__button">Start-in-AR</a>
-        <router-link to="/aframe-template" class="home-content__button">A-Frame</router-link>
-        <a href="/pages/01-ar/ar-buttons.html" class="home-content__button">AR-Buttons.html</a>
-        <router-link to="/scanner" class="home-content__button">Scanner</router-link>
+        <a href="http://127.0.0.1:5000" class="home-content__button">Start-in-AR.py</a>
+        <router-link to="/scanner" class="home-content__button">Start-in-AR.js</router-link>
         <router-link to="/vr-keyboard" class="home-content__button">Play-in-VR</router-link>
+        <a href="/pages/01-ar/ar-buttons.html" class="home-content__button">AR-Buttons.html</a>
       </nav>
 
       <div v-if="isModalVisible" class="home-container__modal">

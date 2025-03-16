@@ -342,6 +342,13 @@ const showNextBtn = computed(() => {
 </script>
 
 <style scoped>
+h1 {
+  font-size: clamp(35px, 1vw, 100px);
+  font-weight: bold;
+  color: #000000;
+  text-align: center;
+}
+
 .rubiks-cube-scanner {
   display: flex;
   flex-direction: column;
@@ -427,9 +434,10 @@ button:disabled {
 
 #instructions {
   margin-top: 15px;
-  font-size: 1.1em;
-  color: #333;
+  font-size: 2em;
+  color: #000000;
   text-align: center;
+  width: 800px;
 }
 
 #rescan-btn {

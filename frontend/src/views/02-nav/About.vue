@@ -37,6 +37,7 @@
           This project is open-source and available under the <strong>MIT License</strong>. <br> Whether you're a developer, designer, or just a Rubik’s Cube enthusiast, <br>we welcome your contributions and feedback!
         </p>
       </section>
+      <br>
     </div>
   </HomeTemplate>
 </template>
