@@ -5,6 +5,7 @@ import Introduction from '../views/02-nav/Introduction.vue';
 import About from '../views/02-nav/About.vue';
 import Signup from '../views/02-nav/Signup.vue';
 import Login from '../views/02-nav/Login.vue';
+import AdminSignup from "@/views/02-nav/AdminSignup.vue";
 // Home
 import HomePage from '@/views/01-index/HomePage.vue';
 import HomeDev from '@/views/01-index/HomeDev.vue';
@@ -13,6 +14,7 @@ import VrAframeDemo from '@/views/04-vr/vr-aframe-demo.vue';
 import VrKeyboard from '@/views/04-vr/vr-keyboard.vue';
 // Scanner
 import Scanner from "@/views/05-scanner/Scanner.vue";
+import ViewUsers from "@/views/02-nav/ViewUsers.vue";
 
 const routes = [
   {
@@ -59,6 +61,16 @@ const routes = [
     path: '/scanner',
     name: 'scanner',
     component: Scanner,
+  },
+  {
+    path: '/view-users',
+    name: 'view-users',
+    component: ViewUsers,
+  },
+  {
+    path: '/admin-signup',
+    name: 'admin-signup',
+    component: AdminSignup,
   }
 ];
 

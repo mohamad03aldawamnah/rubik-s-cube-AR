@@ -1,11 +1,10 @@
-<!-- src/App.vue -->
 <template>
   <div id="app">
     <router-view />
     <br>
     <footer>
       <p>Vue + Express</p>
-      <p>Message from Express API: {{ message }}</p>
+      <p>Backend API: {{ message }}</p>
     </footer>
   </div>
 </template>
@@ -17,7 +16,7 @@ const message = ref('');
 
 onMounted(async () => {
   try {
-    const res = await fetch('http://localhost:8080');
+    const res = await fetch('http://localhost:8000');
     if (res.ok) {
       message.value = await res.text();
     } else {

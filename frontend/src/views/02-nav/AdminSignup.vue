@@ -1,21 +1,29 @@
+<!-- src/views/AdminSignup.vue -->
 <template>
   <div id="page-frame">
     <AppHeader />
     <div class="main">
       <div id="home-content">
-        <h1>Login</h1>
+        <h1>Admin Sign Up</h1>
+
+        <!-- 成功提示 -->
+        <div v-if="success" class="alert success">
+          {{ success }}
+          <span class="countdown">{{ countdown }}</span>秒后自动跳转到登录页
+        </div>
 
         <!-- 错误提示 -->
-        <div v-if="error" class="alert error">{{ error }}</div>
+        <div v-if="error" class="alert error">
+          {{ error }}
+        </div>
 
-        <!-- 登录表单 -->
-        <form @submit.prevent="login">
+        <!-- 注册表单 -->
+        <form @submit.prevent="register">
           <div class="form-group">
             <input
                 v-model="username"
                 placeholder="Username"
                 :class="{ 'input-error': error }"
-                required
             />
           </div>
           <div class="form-group">
@@ -24,15 +32,22 @@
                 type="password"
                 placeholder="Password"
                 :class="{ 'input-error': error }"
-                required
+            />
+          </div>
+          <div class="form-group" v-if="requiresSecret">
+            <input
+                v-model="secret"
+                type="password"
+                placeholder="Secret Key"
+                :class="{ 'input-error': error }"
             />
           </div>
           <button type="submit" :disabled="isSubmitting">
-            {{ isSubmitting ? 'Logging in...' : 'Login' }}
+            {{ isSubmitting ? 'Registering...' : 'Register' }}
           </button>
         </form>
         <p>
-          Don't have an account? <router-link to="/signup">Sign up</router-link>
+          Already have an account? <router-link to="/login">Login</router-link>
         </p>
       </div>
     </div>
@@ -40,43 +55,69 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
 import AppHeader from '@/components/headers/Header.vue';
 import api from '@/utils/api';
 
-// Reactive state
 const username = ref('');
 const password = ref('');
+const secret = ref(''); // 密钥输入（可选）
 const error = ref('');
+const success = ref('');
 const isSubmitting = ref(false);
+const countdown = ref(3); // 倒计时秒数
+const timer = ref(null);
 const router = useRouter();
+const requiresSecret = true; // 如果后端不需要密钥，设为 false
 
-// 登录函数
-const login = async () => {
+// 注册功能
+const register = async () => {
   isSubmitting.value = true;
   error.value = '';
+  success.value = '';
 
   try {
-    const response = await api.post('/api/login', {
+    const payload = {
       username: username.value.trim(),
       password: password.value.trim()
-    });
+    };
+    if (requiresSecret) {
+      payload.secret = secret.value.trim();
+    }
 
-    if (response.data.success && response.data.data.token) {
-      localStorage.setItem('token', response.data.data.token);
-      alert('Login successful');
-      router.push('/');
+    const response = await api.post('/api/register/admin', payload);
+
+    if (response.data.success) {
+      success.value = response.data.message;
+      startCountdown(); // 启动倒计时
+      alert('Administrator registered successfully');
     } else {
-      error.value = 'Login failed, invalid response data';
+      error.value = response.data.message || 'Registration failed, please try again later';
     }
   } catch (err) {
-    error.value = err.response?.data?.message || 'Login failed, please check your username and password';
-    console.error('Login error:', err);
+    error.value = err.response?.data?.message || 'Registration failed, please check your input';
+    console.error('Registration error:', err);
   } finally {
     isSubmitting.value = false;
   }
 };
+
+// 启动倒计时
+const startCountdown = () => {
+  timer.value = setInterval(() => {
+    if (countdown.value > 0) {
+      countdown.value--;
+    } else {
+      clearInterval(timer.value);
+      router.push('/login'); // 倒计时结束后跳转到登录页
+    }
+  }, 1000);
+};
+
+onBeforeUnmount(() => {
+  if (timer.value) clearInterval(timer.value); // 页面卸载时清除定时器
+});
 </script>
 
 <style scoped>
@@ -142,6 +183,18 @@ button:disabled {
   cursor: not-allowed;
 }
 
+.alert.success {
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 4px;
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  text-align: center;
+  font-family: 'Baloo 2', sans-serif;
+  font-size: clamp(20px, 2vw, 30px);
+}
+
 .alert.error {
   padding: 1rem;
   margin-bottom: 1.5rem;
@@ -152,6 +205,12 @@ button:disabled {
   text-align: center;
   font-family: 'Baloo 2', sans-serif;
   font-size: clamp(20px, 2vw, 30px);
+}
+
+.countdown {
+  color: #155724;
+  font-weight: bold;
+  margin-left: 0.5rem;
 }
 
 a {
