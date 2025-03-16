@@ -1,38 +1,38 @@
 <template>
-  <div id="home-frame">
-    <Header />
-    <div class="main">
-      <img id="home-img" src="/images/junjiehome.png" />
-      <div id="home-content">
-        <h1>DEV-MODE</h1>
-        <h2>HTML</h2>
-        <br>
-        <button class="home-content__button home-content__button--blue" @click="showModal">Instructions</button>
-        <a href="/pages/01-ar/ar-buttons.html">AR-Buttons.html</a>
-        <a href="/pages/01-ar/ar-buttons-vr-cube.html">AR-BtnsCube.html</a>
-        <a href="/pages/01-ar/ar-keyboard.html">AR-Keyboard.html</a>
-        <a href="/pages/02-vr/vr-buttons.html">VR-Buttons.html</a>
-        <a href="/pages/02-vr/vr-keyboard.html">VR-Keyboard.html</a>
-      </div>
-    </div>
+  <Header/>
+  <HomeTemplate>
+        <img id="home-img" src="/images/junjiehome.png" />
+        <div id="home-content">
+          <h1>DEV-MODE</h1>
+          <h2>HTML</h2>
+          <br>
+          <button class="home-content__button home-content__button--blue" @click="showModal">Instructions</button>
+          <a href="/pages/01-ar/ar-buttons.html">AR-Buttons.html</a>
+          <a href="/pages/01-ar/ar-buttons-vr-cube.html">AR-BtnsCube.html</a>
+          <a href="/pages/01-ar/ar-keyboard.html">AR-Keyboard.html</a>
+          <a href="/pages/02-vr/vr-buttons.html">VR-Buttons.html</a>
+          <a href="/pages/02-vr/vr-keyboard.html">VR-Keyboard.html</a>
 
-    <div v-if="isModalVisible" class="home-container__modal">
-      <div class="home-container__modal-content">
-        <span class="home-container__modal-close" @click="hideModal">×</span>
-        <h2>Program Instructions</h2>
-        <p>To start the program, click the "Run Program" button in the center of the home webpage.</p>
-        <img class="home-container__modal-image" src="/images/Instruction-arrow.png" alt="Instruction Arrow" />
-        <p>
-          To use the colour detection program, align the cube with the green dots in the center and click the "Detect Colours" button, then save and next.
-          Once you have scanned all six faces, a "Generate Cube" button will appear. Click it to create the cube. If you want to start scanning the cube from the beginning again, press the "Reset Cube" button.
-        </p>
-        <img class="home-container__modal-image" src="/images/ColourDetectInstructs.png" alt="Colour Detect Instructions" />
-      </div>
-    </div>
-  </div>
+          <div v-if="isModalVisible" class="home-container__modal">
+            <div class="home-container__modal-content">
+              <span class="home-container__modal-close" @click="hideModal">×</span>
+              <h2>Program Instructions</h2>
+              <p>To start the program, click the "Run Program" button in the center of the home webpage.</p>
+              <img class="home-container__modal-image" src="/images/Instruction-arrow.png" alt="Instruction Arrow" />
+              <p>
+                To use the colour detection program, align the cube with the green dots in the center and click the "Detect Colours" button, then save and next.
+                Once you have scanned all six faces, a "Generate Cube" button will appear. Click it to create the cube. If you want to start scanning the cube from the beginning again, press the "Reset Cube" button.
+              </p>
+              <img class="home-container__modal-image" src="/images/ColourDetectInstructs.png" alt="Colour Detect Instructions" />
+            </div>
+          </div>
+        </div>
+  </HomeTemplate>
 </template>
 
 <script setup>
+import HomeTemplate from '@/components/templates/HomeTemplate.vue';
+
 import Header from '@/components/headers/Header.vue';
 import { ref } from 'vue';
 
@@ -48,23 +48,6 @@ const hideModal = () => {
 </script>
 
 <style scoped>
-#home-frame {
-  border-radius: 25px;
-  padding-bottom: clamp(30px, 10vh, 500px);
-  margin: 3px;
-}
-
-.main {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  border-radius: 30px;
-  width: 80%;
-  margin: 0 auto;
-  box-sizing: border-box;
-}
-
 #home-img {
   width: 20%;
   height: auto;
@@ -76,29 +59,34 @@ const hideModal = () => {
 #home-content {
   flex: 1;
   text-align: center;
-  border-radius: 27px;
-  background-image: url(/images/Rubikcube.jpg);
-  background-repeat: repeat;
-  background-size: cover;
+  border-radius: 30px;
+  background-color: skyblue;
   box-sizing: border-box;
   margin-inline: 2vh;
   margin-top: clamp(2vh, 1vh, 10%);
   margin-bottom: clamp(2vh, 1vh, 10%);
+  padding: 0 !important; /* 强制清除所有 padding */
+  height: clamp(2vh, 1vh, 10%);
+  overflow-y: auto;
+  background-image: url(/images/Rubikcube.jpg);
+  background-repeat: repeat;
+  background-size: cover;
 }
 
 #home-content h1 {
   font-size: clamp(45px, 5vw, 100px);
-  font-family: "Gochi Hand", cursive;
-  margin-bottom: 0.5vh;
   color: white;
+  font-family: "Gochi Hand", cursive;
+  text-align: center;
+  margin-bottom: 1vh;
 }
 
 #home-content h2 {
   color: white;
-  text-align: center;
   font-family: "Baloo 2";
   font-size: clamp(20px, 3vw, 40px);
   font-style: normal;
+  text-align: center;
   font-weight: 600;
   line-height: 140%;
 }
@@ -146,7 +134,7 @@ const hideModal = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 1% auto;
+  margin: 0 auto;
   width: clamp(250px, 30vw, 300px);
   padding: 10px 20px;
   border: none;
@@ -241,25 +229,6 @@ const hideModal = () => {
   }
 }
 
-@media (max-width: 800px) {
-  .main {
-    flex-direction: column;
-    width: 100%;
-    margin: 0 auto;
-    border-radius: 0;
-  }
-
-  #home-img {
-    width: 40% !important;
-    margin: 20px auto !important;
-  }
-
-  #home-content {
-    width: 90% !important;
-    margin: 20px auto !important;
-  }
-}
-
 @media (max-width: 450px) {
   #home-img {
     width: 40% !important;
@@ -269,14 +238,6 @@ const hideModal = () => {
   #home-content {
     padding: 15px !important;
     margin: 10px auto !important;
-  }
-
-  .home-container__title {
-    font-size: clamp(32px, 9vw, 48px);
-  }
-
-  .home-container__subtitle {
-    font-size: clamp(18px, 5vw, 28px);
   }
 
   #home-content p {
@@ -292,9 +253,17 @@ const hideModal = () => {
   }
 }
 
-@media (max-width: 768px) {
-  .home-container__title {
-    font-size: clamp(35px, 8vw, 60px);
+@media (max-width: 800px) {
+  #home-img {
+    width: 25% !important;
+    margin: 20px auto !important;
+  }
+
+  #home-content {
+    width: 100% !important;
+    margin: 20px auto !important;
+    border-radius: 0;
   }
 }
 </style>
+

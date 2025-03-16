@@ -3,10 +3,7 @@
   <div id="home-frame">
     <Header />
     <div class="main">
-      <img id="home-img" src="/images/junjiehome.png" />
-      <div id="home-content">
-        <slot></slot>
-      </div>
+      <slot></slot>
     </div>
   </div>
 </template>
@@ -17,9 +14,7 @@
 <style scoped>
 #home-frame {
   border-radius: 25px;
-  padding-bottom: clamp(30px, 10vh, 500px);
-  margin: 3px;
-
+  padding-bottom: clamp(25px, 10vh, 500px);
 }
 
 .main {
@@ -31,28 +26,6 @@
   width: 80%;
   margin: 0 auto;
   box-sizing: border-box;
-}
-
-#home-img {
-  width: 20%;
-  height: auto;
-  margin-top: 4vh;
-  margin-bottom: 4vh;
-  margin-inline: 2vw;
-}
-
-#home-content {
-  flex: 1;
-  text-align: center;
-  border-radius: 30px;
-  background-color: skyblue;
-  box-sizing: border-box;
-  margin-inline: 2vh;
-  margin-top: clamp(2vh, 1vh, 10%);
-  margin-bottom: clamp(2vh, 1vh, 10%);
-  padding: 0 !important; /* 强制清除所有 padding */
-  height: clamp(2vh, 1vh, 10%);
-  overflow-y: auto;
 }
 
 #home-content h1 {
