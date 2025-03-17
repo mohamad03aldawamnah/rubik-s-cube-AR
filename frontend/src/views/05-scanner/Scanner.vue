@@ -38,6 +38,12 @@
           Next Step (Space)
         </button>
       </div>
+
+      <!-- 添加解决方案显示区域 -->
+      <div v-if="solution" class="solution-container">
+        <h2>Solution:</h2>
+        <p>{{ solution }}</p>
+      </div>
     </div>
   </HomeTemplate>
 </template>
@@ -46,6 +52,7 @@
 import { ref, onMounted, onUnmounted, computed } from 'vue';
 import HomeTemplate from "@/components/templates/HomeTemplate.vue";
 import Header from "@/components/headers/Header.vue";
+import api from '@/utils/api';
 
 const camera = ref(null);
 const overlay = ref(null);
@@ -55,6 +62,7 @@ const currentStep = ref(-1);
 const scanState = ref(0);
 const captureDisabled = ref(false);
 const scanResults = ref({});
+const solution = ref(''); // 用于存储解决方案
 
 const standardColors = {
   White: { r: 255, g: 255, b: 255 },
@@ -292,6 +300,25 @@ const nextStep = () => {
   currentStep.value++;
   scanState.value = 0;
   updateInstructions();
+
+  // 如果所有面都扫描完成，发送数据到后端
+  if (currentStep.value === scanSequence.length) {
+    sendScanResults();
+  }
+};
+
+const sendScanResults = async () => {
+  try {
+    const response = await api.post('/api/scan', scanResults.value); // 使用 api.post 发送数据
+    if (response.data.success) {
+      console.log('Response from server:', response.data);
+      solution.value = response.data.solution; // 更新解决方案
+    } else {
+      throw new Error(response.data.message || 'Failed to send scan results.');
+    }
+  } catch (error) {
+    console.error('Error sending scan results:', error.message);
+  }
 };
 
 const handleResize = () => {

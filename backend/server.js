@@ -38,6 +38,7 @@ app.use(cors({
 app.use('/api/register', require('./router/register'));
 app.use('/api/login', require('./router/login'));
 app.use('/api/users', require('./router/users'));
+app.use('/api/scan', require('./router/scanner-solver'));
 
 // HelloWorld
 app.get('/', (req, res) => {
